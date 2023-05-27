@@ -31,5 +31,7 @@
 *.out
 *.app
 
-# xcode
+# IDE
 *.xcodeproj/
+/cmake-build-debug/
+*.idea

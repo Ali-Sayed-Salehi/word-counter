@@ -1,9 +1,3 @@
-//
-//  main.cpp
-//  word-counter
-//
-//  Created by Ali Sayed Salehi on 2023-05-27.
-//
 
 #include <iostream>
 
