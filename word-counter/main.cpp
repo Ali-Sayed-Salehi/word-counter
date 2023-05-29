@@ -1,32 +1,4 @@
 
-//#include <iostream>
-//#include "NumList.hpp"
-//
-//using std::cout;
-//using std::endl;
-//
-//int main(int argc, const char * argv[]) {
-//
-//    NumList numList;
-//
-//
-//    cout << "all good\n";
-//    cout << numList.getCapacity() << endl;
-//    numList.append(2);
-//    numList.append(2);
-//
-//    cout << numList.contains(3) << endl;
-//    cout << numList.getCapacity() << endl;
-//    numList.append(5);
-//    numList.append(4);
-//    numList.append(4);
-//    numList.print(cout);
-//
-//
-//    return 0;
-//}
-
-
 #include <iostream>
 #include <cassert>
 #include "inc/NumList.hpp"
@@ -34,7 +6,15 @@
 using std::cout;
 using std::endl;
 
+void testNumList();
+
 int main() {
+    testNumList();
+    return 0;
+}
+
+
+void testNumList() {
     std::cout << "Testing NumList!\n";
     NumList list{};
     cout << "list-1 -> " << list << endl;
@@ -73,5 +53,4 @@ int main() {
 
     assert(! list.get(list.getSize(), value));
     cout << "NumList Test Successful" << endl;
-    return 0;
 }
