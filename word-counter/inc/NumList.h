@@ -1,6 +1,9 @@
+//
+// Created by Ali Sayed Salehi on 2023-05-28.
+//
 
-#ifndef NumList_hpp
-#define NumList_hpp
+#ifndef NumList_h
+#define NumList_h
 
 #include <cstdio>
 #include <iostream>
@@ -12,8 +15,6 @@ private:
     int size{};
 
     void expand();
-
-
 
 public:
     NumList();

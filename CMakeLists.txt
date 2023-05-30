@@ -6,6 +6,6 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(word-counter/inc)
 
 add_executable(word_counter
-        word-counter/inc/NumList.hpp
+        word-counter/inc/NumList.h
         word-counter/main.cpp
-        word-counter/src/NumList.cpp)
+        word-counter/src/NumList.cpp word-counter/src/Word.cpp word-counter/inc/Word.h)

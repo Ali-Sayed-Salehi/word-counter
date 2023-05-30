@@ -1,20 +1,13 @@
 
 #include <iostream>
 #include <cassert>
-#include "inc/NumList.hpp"
+#include "inc/NumList.h"
+#include "inc/Word.h"
 
 using std::cout;
 using std::endl;
 
-void testNumList();
-
-int main() {
-    testNumList();
-    return 0;
-}
-
-
-void testNumList() {
+void testNumListClass() {
     std::cout << "Testing NumList!\n";
     NumList list{};
     cout << "list-1 -> " << list << endl;
@@ -53,4 +46,56 @@ void testNumList() {
 
     assert(! list.get(list.getSize(), value));
     cout << "NumList Test Successful" << endl;
+}
+
+Word makeWord(const char * word, int number)
+{
+    Word w1{ word, number };
+    return w1; // return a temporary
+}
+void testWordClass(){
+    std::cout << "Testing Objects of Class Word\n";
+
+    Word w1{ makeWord("Hello", 11)};
+    cout << "A) w1: "; w1.print(cout); cout << endl;
+
+    w1 = makeWord("Goodbye", 22); // move assignment
+    cout << "B) w1: "; w1.print(cout); cout << endl;
+
+    w1.appendNumber(33);
+    w1.appendNumber(44);
+    w1.appendNumber(55);
+    w1.appendNumber(66);
+    cout << "C) w1: "; w1.print(cout); cout << endl;
+
+    Word w2 = w1; // copy constructor (not copy assignment)
+    w1.appendNumber(77);
+    cout << "D) w1: "; w1.print(cout); cout << endl;
+    cout << "E) w2: "; w2.print(cout); cout << endl;
+
+    w2 = w1; // copy assignment
+    cout << "F) w1: "; w1.print(cout); cout << endl;
+    cout << "G) w2: "; w2.print(cout); cout << endl;
+
+
+    Word w3 = std::move(w2); // move constructor
+    cout << "H) w3: "; w3.print(cout); cout << endl;
+//    cout << "I) w2: "; w2.print(cout); cout << endl; // warning C26800: Use of a moved from object
+
+    w1 = std::move(w3); // move assignment
+ //   cout << "J) w3: "; w3.print(cout); cout << endl; // warning C26800: Use of a moved from object
+    cout << "K) w1: "; w1.print(cout); cout << endl;
+
+    NumList ia = w1.getNumberList();
+    cout << "L) ia: "; ia.print(cout); cout << endl;
+    const char* pCstr = w1.c_str();
+    cout << "M) length of w1: " << pCstr << " = " << std::strlen(pCstr);
+    cout << endl;
+}
+
+
+int main() {
+    testNumListClass();
+    testWordClass();
+    return 0;
 }

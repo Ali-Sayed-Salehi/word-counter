@@ -1,5 +1,8 @@
+//
+// Created by Ali Sayed Salehi on 2023-05-28.
+//
 
-#include "../inc/NumList.hpp"
+#include "../inc/NumList.h"
 
 NumList::NumList() : capacity(1), pArray(new int[1]), size(0) {
 }
@@ -66,13 +69,12 @@ NumList& NumList::operator=(const NumList& rhs) {
     delete[] pArray;
     pArray = new int[rhs.capacity];
 
-    for (int i = 0; i < size; ++i) {
+    for (int i = 0; i < rhs.size; ++i) {
         pArray[i] = rhs.pArray[i];
     }
 
     capacity = rhs.capacity;
     size = rhs.size;
-
     return *this;
 }
 
@@ -81,12 +83,10 @@ NumList &NumList::operator=(NumList &&rhs) noexcept {
 
     delete[] pArray;
     pArray = rhs.pArray;
-
     rhs.pArray = nullptr;
 
     capacity = rhs.capacity;
     size = rhs.size;
-
     return *this;
 }
 
