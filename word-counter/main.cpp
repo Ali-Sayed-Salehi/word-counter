@@ -3,6 +3,7 @@
 #include <cassert>
 #include "inc/NumList.h"
 #include "inc/Word.h"
+#include "WordList.h"
 
 using std::cout;
 using std::endl;
@@ -92,10 +93,26 @@ void testWordClass(){
     cout << "M) length of w1: " << pCstr << " = " << std::strlen(pCstr);
     cout << endl;
 }
+void testWordList() {
+    WordList bucket;
+    Word t1("Hello", 1); bucket.addSorted(t1);
+    Word t2("Hello", 11); bucket.addSorted(t2);
+    Word t3("Hello", 111); bucket.addSorted(t3);
+    Word tArray[]{ Word("How", 1), Word("are", 11), Word("you", 2),
+                   Word("today?", 22), Word("#tag", 3),
+                   Word("bye", 3) };
+    for (const Word& t : tArray)
+    {
+        bucket.addSorted(t);
+    }
+    bucket.print(cout);
+    cout << endl;
+}
 
 
 int main() {
     testNumListClass();
     testWordClass();
+    testWordList();
     return 0;
 }

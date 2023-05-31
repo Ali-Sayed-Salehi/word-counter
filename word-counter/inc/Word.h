@@ -27,6 +27,8 @@ public:
     void print(std::ostream& os) const;
     const NumList& getNumberList() const;
     int compare(const Word& other) const;
+
+    friend std::ostream& operator<<(std::ostream& os, const Word& aWord);
 };
 
 

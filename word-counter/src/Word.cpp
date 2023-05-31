@@ -5,9 +5,10 @@
 #include "../inc/Word.h"
 
 Word::Word(const char* pCharArr, int n) :
-    pCharArray(new char[std::strlen(pCharArr) + 1]),  frequency(n){
+    pCharArray(new char[std::strlen(pCharArr) + 1]),  frequency(0){
     strcpy(pCharArray, pCharArr);
     num_list.append(n);
+    frequency = num_list.getSize();
 }
 
 Word::Word(const Word &source) : frequency(source.frequency), num_list(source.num_list){
@@ -84,5 +85,13 @@ int Word::compare(const Word &other) const {
         //this is equal to other
         return 0;
     }
+}
+
+std::ostream &operator<<(std::ostream &os, const Word &aWord) {
+    os << "\t" << aWord.pCharArray << "\t (" << aWord.num_list.getSize() << ")";
+    aWord.num_list.print(os);
+    os << std::endl;
+
+    return os;
 }
 
