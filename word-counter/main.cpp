@@ -1,9 +1,12 @@
 
 #include <iostream>
 #include <cassert>
+#include <string>
 #include "inc/NumList.h"
 #include "inc/Word.h"
-#include "WordList.h"
+#include "inc/WordList.h"
+#include "Dictionary.h"
+
 
 using std::cout;
 using std::endl;
@@ -108,11 +111,20 @@ void testWordList() {
     bucket.print(cout);
     cout << endl;
 }
-
+void testDictionaryClass() {
+        cout << "Enter the name of input text file: " ;
+        string filename;
+        std::cin >> filename;
+        Dictionary dictionary(filename);
+        dictionary.print(cout);
+};
 
 int main() {
-    testNumListClass();
-    testWordClass();
-    testWordList();
+    //testNumListClass();
+    //testWordClass();
+    //testWordList();
+    testDictionaryClass();
     return 0;
 }
+
+// /Users/ali/repos/word-counter/word-counter/Seuss.txt
