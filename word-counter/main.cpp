@@ -126,5 +126,3 @@ int main() {
     testDictionaryClass();
     return 0;
 }
-
-// /Users/ali/repos/word-counter/word-counter/Seuss.txt
