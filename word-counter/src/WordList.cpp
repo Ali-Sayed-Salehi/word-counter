@@ -114,7 +114,8 @@ WordList::WordList(const WordList &source) {
     tail = current;
 }
 
-WordList::WordList(WordList &&source)  noexcept : head(source.head), tail(source.tail), theSize(source.theSize){
+WordList::WordList(WordList &&source)  noexcept :
+    head(source.head), tail(source.tail), theSize(source.theSize){
     source.head = nullptr;
     source.tail = nullptr;
 }

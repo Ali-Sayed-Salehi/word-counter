@@ -5,7 +5,6 @@
 #ifndef NumList_h
 #define NumList_h
 
-#include <cstdio>
 #include <iostream>
 
 class NumList {
