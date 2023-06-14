@@ -1,3 +1,4 @@
+/*
 //
 // Created by Ali Sayed Salehi on 2023-05-30.
 //
@@ -58,3 +59,4 @@ public:
 
 
 #endif //WORD_COUNTER_WORDLIST_H
+*/

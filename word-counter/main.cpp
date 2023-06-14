@@ -2,15 +2,16 @@
 #include <iostream>
 #include <cassert>
 #include <string>
-#include "inc/NumList.h"
+//#include "inc/NumList.h"
 #include "inc/Word.h"
-#include "inc/WordList.h"
-#include "Dictionary.h"
+//#include "inc/WordList.h"
+//#include "Dictionary.h"
 
 
 using std::cout;
 using std::endl;
 
+/*
 void testNumListClass() {
     std::cout << "Testing NumList!\n";
     NumList list{};
@@ -51,10 +52,11 @@ void testNumListClass() {
     assert(! list.get(list.getSize(), value));
     cout << "NumList Test Successful" << endl;
 }
+*/
 
-Word makeWord(const char * word, int number)
+Word makeWord(string word, size_t lineNumber)
 {
-    Word w1{ word, number };
+    Word w1{ word, lineNumber };
     return w1; // return a temporary
 }
 void testWordClass(){
@@ -65,15 +67,23 @@ void testWordClass(){
 
     w1 = makeWord("Goodbye", 22); // move assignment
     cout << "B) w1: "; w1.print(cout); cout << endl;
-
+/*
     w1.appendNumber(33);
     w1.appendNumber(44);
     w1.appendNumber(55);
     w1.appendNumber(66);
+    */
+    w1.push_back_line_number(33);
+    w1.push_back_line_number(44);
+    w1.push_back_line_number(55);
+    w1.push_back_line_number(66);
+
     cout << "C) w1: "; w1.print(cout); cout << endl;
 
     Word w2 = w1; // copy constructor (not copy assignment)
-    w1.appendNumber(77);
+//    w1.appendNumber(77);
+    w1.push_back_line_number(77);
+
     cout << "D) w1: "; w1.print(cout); cout << endl;
     cout << "E) w2: "; w2.print(cout); cout << endl;
 
@@ -90,12 +100,17 @@ void testWordClass(){
  //   cout << "J) w3: "; w3.print(cout); cout << endl; // warning C26800: Use of a moved from object
     cout << "K) w1: "; w1.print(cout); cout << endl;
 
-    NumList ia = w1.getNumberList();
-    cout << "L) ia: "; ia.print(cout); cout << endl;
-    const char* pCstr = w1.c_str();
-    cout << "M) length of w1: " << pCstr << " = " << std::strlen(pCstr);
+    auto ia = w1.get_number_list();
+    cout << "L) ia: ";
+    for (auto& element : ia) {
+        cout << element << " ";
+    }
+    cout << endl;
+
+    cout << "M) length of w1: " << w1.get_word_text() << " = " << w1.length();
     cout << endl;
 }
+/*
 void testWordList() {
     WordList bucket;
     Word t1("Hello", 1); bucket.addSorted(t1);
@@ -111,6 +126,8 @@ void testWordList() {
     bucket.print(cout);
     cout << endl;
 }
+*/
+/*
 void testDictionaryClass() {
         cout << "Enter the name of input text file: " ;
         string filename;
@@ -118,12 +135,13 @@ void testDictionaryClass() {
         Dictionary dictionary(filename);
         dictionary.print(cout);
 };
+*/
 
 int main() {
     //testNumListClass();
-    //testWordClass();
+    testWordClass();
     //testWordList();
-    testDictionaryClass();
+    //testDictionaryClass();
     return 0;
 }
 

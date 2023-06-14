@@ -4,6 +4,7 @@
 
 #ifndef WORD_COUNTER_DICTIONARY_H
 #define WORD_COUNTER_DICTIONARY_H
+/*
 
 #include<string>
 using std::string;
@@ -25,6 +26,7 @@ public:
     Dictionary& operator=(const Dictionary& rhs) = default;
     Dictionary& operator=(Dictionary&& rhs) = default;
 };
+*/
 
 
 #endif //WORD_COUNTER_DICTIONARY_H
