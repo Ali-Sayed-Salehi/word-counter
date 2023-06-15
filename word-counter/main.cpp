@@ -139,7 +139,7 @@ void testDictionaryClass() {
 
 int main() {
     //testNumListClass();
-    testWordClass();
+    //testWordClass();
     //testWordList();
     //testDictionaryClass();
     return 0;
