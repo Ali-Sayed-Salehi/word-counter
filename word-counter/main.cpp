@@ -133,6 +133,7 @@ void testDictionaryClass() {
         std::cin >> filename;
         Dictionary dictionary(filename);
         dictionary.print_original_buckets();
+        dictionary.print_input_lines();
 };
 
 int main() {

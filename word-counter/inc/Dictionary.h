@@ -66,12 +66,12 @@ private:
     // extract_words_from_line and push_back_into_bucket,
     void extract_and_push(const string& line, size_t line_number);
 
-    bool exists(const list<Word>& list, const Word& word) const;
-    Word& find(list<Word>& list, const Word& word);
+    static bool exists(const list<Word>& list, const Word& word) ;
+    static Word& find(list<Word>& list, const Word& word);
 
 
 public:
-    explicit Dictionary(const string& input_text_file, const string& delimiters = " \t\n");
+    explicit Dictionary(const string& input_text_file, const string& delimiters = " \t\n\r");
     Dictionary() = delete;
     ~Dictionary();
     Dictionary(const Dictionary& ) = default;  // copy ctor

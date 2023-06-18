@@ -107,6 +107,7 @@ Dictionary::Dictionary(const string &input_text_file, const string &delimiters) 
     std::string line;
     size_t lineNumber = 0;
     while (std::getline(file, line)) {
+        if (std::isspace(static_cast<unsigned char>(line[0]))) continue;
         ++lineNumber;
         input_lines.push_back(line);
         extract_and_push(line, lineNumber);
@@ -135,6 +136,7 @@ vector<string> Dictionary::extract_words_from_line(const string &line) const {
         std::string token {line.substr(tokenStartIndex, tokenEndIndex - tokenStartIndex)};
         tokenStartIndex = line.find_first_not_of(theDelimiters, tokenEndIndex + 1);
 
+        if (std::isspace(static_cast<unsigned char>(token[0]))) continue;
         lineTokens.push_back(token);
     }
     return lineTokens;
@@ -251,7 +253,7 @@ void Dictionary::print_buckets_sorted_on_word_length(const set<char> &charSet) c
     }
 }
 
-bool Dictionary::exists(const list<Word>& list, const Word &word) const {
+bool Dictionary::exists(const list<Word>& list, const Word &word) {
     bool found = std::any_of(list.begin(), list.end(), [&](const Word &element) {
         return element.get_word_text() == word.get_word_text();
     });
