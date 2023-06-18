@@ -83,7 +83,8 @@ size_t Word::size() const {
 //}
 
 void Word::print(ostream &os) const {
-    os << "\t" << text << "\t (" << frequency << ")";
+
+    os << "\t" << text << "\t (" << frequency << ")" << "\t";
     for (const auto& element : line_number_vec) {
         os << element << " ";
     }

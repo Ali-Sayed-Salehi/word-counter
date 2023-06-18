@@ -5,7 +5,7 @@
 //#include "inc/NumList.h"
 #include "inc/Word.h"
 //#include "inc/WordList.h"
-//#include "Dictionary.h"
+#include "inc/Dictionary.h"
 
 
 using std::cout;
@@ -127,21 +127,19 @@ void testWordList() {
     cout << endl;
 }
 */
-/*
 void testDictionaryClass() {
         cout << "Enter the name of input text file: " ;
         string filename;
         std::cin >> filename;
         Dictionary dictionary(filename);
-        dictionary.print(cout);
+        dictionary.print_original_buckets();
 };
-*/
 
 int main() {
     //testNumListClass();
     //testWordClass();
     //testWordList();
-    //testDictionaryClass();
+    testDictionaryClass();
     return 0;
 }
 
