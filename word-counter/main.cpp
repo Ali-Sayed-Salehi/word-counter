@@ -218,13 +218,6 @@ int main() {
     //testWordClass();
     //makeDictionary();
     runProgram();
-/*
-
-    auto dictionary = makeDictionary();
-    dictionary->print_original_buckets();
-    dictionary->print_input_lines();
-    delete dictionary;
-*/
 
     return 0;
 }
