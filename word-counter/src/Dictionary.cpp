@@ -1,78 +1,7 @@
-/*
+
 //
 // Created by Ali Sayed Salehi on 2023-05-31.
 //
-
-#include <fstream>
-#include <sstream>
-#include "Dictionary.h"
-
-size_t Dictionary::bucketIndex(const string &word) {
-    size_t index = 26; // bucket index for words not beginning with a letter
-    if (isalpha(word[0]))
-    {
-        if(isupper(word[0])) index = word[0] - 'A';
-        else                  index = word[0] - 'a';
-    }
-    return index;
-}
-
-Dictionary::Dictionary(const string &filename) : filename(filename)
-{
-    for (auto & wordListBucket : wordListBuckets) {
-        auto* wordListPtr = new WordList();
-        wordListBucket = *wordListPtr;
-    }
-
-
-    std::ifstream fin(filename);  // create an input file stream
-    if (!fin)
-    {
-        std::cout << "could not open input file: " << filename << std::endl;
-        exit(1);
-    }
-
-    int lineNum = 0;
-    string line;
-    getline(fin, line); // very important first attempt to read;
-    // this first attemot will get the i/o flags initialized
-    while (fin) {
-        //cout << line << endl;
-        ++lineNum;                // count the line
-        std::istringstream sin(line);  // turn the line into an input string stream
-        string wordStr;
-        while (sin >> wordStr)     // extract word strings
-        {
-            processWord(wordStr, lineNum);
-        }
-        getline(fin, line);      // attempt to read the next line, if any
-    }
-    fin.close();
-
-
-}
-
-void Dictionary::processWord(const string &word, int lineNum) {
-    size_t wordIndex = bucketIndex(word);
-    wordListBuckets[wordIndex].addSorted(word, lineNum);
-}
-
-
-
-void Dictionary::print(std::ostream &out) const {
-    char character {'A'};
-    char capital{};
-    for (auto & wordListBucket : wordListBuckets) {
-        if (character == '[') character = ' ';
-        out << "<" << character << ">";
-        wordListBucket.print(out);
-        character++;
-    }
-
-}
-
-
-*/
 
 #include<iostream>
 #include <fstream>
@@ -83,8 +12,8 @@ void Dictionary::print(std::ostream &out) const {
 #include<set>
 #include <algorithm>
 #include <forward_list>
-#include "../inc/word.h"
-#include "Dictionary.h"
+#include "../inc/Word.h"
+#include "../inc/Dictionary.h"
 
 using std::forward_list;
 using std::set;
@@ -107,7 +36,6 @@ Dictionary::Dictionary(const string &input_text_file, const string &delimiters) 
     std::string line;
     size_t lineNumber = 0;
     while (std::getline(file, line)) {
-        if (std::isspace(static_cast<unsigned char>(line[0]))) continue;
         ++lineNumber;
         input_lines.push_back(line);
         extract_and_push(line, lineNumber);
@@ -115,7 +43,7 @@ Dictionary::Dictionary(const string &input_text_file, const string &delimiters) 
     file.close();
 }
 
-size_t Dictionary::bucket_index(const string &wordText) const {
+size_t Dictionary::bucket_index(const string &wordText) {
     size_t index = 26; // bucket index for words not beginning with a letter
     if (isalpha(wordText[0]))
     {
@@ -136,7 +64,6 @@ vector<string> Dictionary::extract_words_from_line(const string &line) const {
         std::string token {line.substr(tokenStartIndex, tokenEndIndex - tokenStartIndex)};
         tokenStartIndex = line.find_first_not_of(theDelimiters, tokenEndIndex + 1);
 
-        if (std::isspace(static_cast<unsigned char>(token[0]))) continue;
         lineTokens.push_back(token);
     }
     return lineTokens;
@@ -169,18 +96,29 @@ void Dictionary::extract_and_push(const string &line, size_t line_number) {
 
 void Dictionary::print_original_buckets(const set<char> &charSet) const {
     char character {'A'};
-    char capital{};
+    std::cout << "unsorted buckets" << std::endl;
+    std::cout << "===========================" << std::endl;
     for (auto & wordListBucket : *word_list_buckets) {
         if (!charSet.empty()) {
-            if (charSet.count(character) == 0 && charSet.count(tolower(character)) == 0) continue;
-        }
-        if (character == '[') character = ' ';
-        std::cout << "<" << character << ">";
-        if (wordListBucket.empty()) {
-            std::cout << "\t" << "list is empty" << std::endl;
-        }
-        for (const auto& word : wordListBucket) {
-            std::cout << word << std::endl;
+            if (charSet.count(character) > 0 || charSet.count(tolower(character)) > 0) {
+                if (character == '[') character = ' ';
+                std::cout << "<" << character << ">";
+                if (wordListBucket.empty()) {
+                    std::cout << "\t" << "list is empty" << std::endl;
+                }
+                for (const auto& word : wordListBucket) {
+                    std::cout << word << std::endl;
+                }
+            }
+        } else {
+            if (character == '[') character = ' ';
+            std::cout << "<" << character << ">";
+            if (wordListBucket.empty()) {
+                std::cout << "\t" << "list is empty" << std::endl;
+            }
+            for (const auto& word : wordListBucket) {
+                std::cout << word << std::endl;
+            }
         }
         character++;
     }
@@ -192,26 +130,38 @@ void Dictionary::print_input_lines(const set<size_t> &line_number_set) const {
     for (const auto& line : input_lines) {
         ++lineNumber;
         if (!line_number_set.empty()) {
-            if (line_number_set.count(lineNumber) < 0) continue;
+            if (line_number_set.count(lineNumber) > 0) {
+                std::cout << std::endl;
+                std::cout << lineNumber << " : " << line << std::endl;
+            }
         }
-        std::cout << std::endl;
-        std::cout << lineNumber << " : " << line << std::endl;
     }
 }
 
 void Dictionary::print_buckets_sorted_on_word_text(const set<char> &charSet) const {
     char character {'A'};
-    char capital{};
+    std::cout << "buckets sorted on word text" << std::endl;
+    std::cout << "===========================" << std::endl;
     for (auto & wordListBucket : *word_list_buckets) {
         if (!charSet.empty()) {
-            if (charSet.count(character) == 0 && charSet.count(tolower(character)) == 0) continue;
-        }
-        if (character == '[') character = ' ';
-        std::cout << "<" << character << ">";
-        std::forward_list<Word> forwardWordListBucket(wordListBucket.begin(), wordListBucket.end());
-        forwardWordListBucket.sort();
-        for (const auto& word : forwardWordListBucket) {
-            std::cout << word << std::endl;
+            if (charSet.count(character) > 0 || charSet.count(tolower(character)) > 0) {
+                if (character == '[') character = ' ';
+                std::cout << "<" << character << ">";
+                std::forward_list<Word> forwardWordListBucket(wordListBucket.begin(), wordListBucket.end());
+                forwardWordListBucket.sort();
+                for (const auto& word : forwardWordListBucket) {
+                    std::cout << word << std::endl;
+                }
+            }
+        } else {
+            if (character == '[') character = ' ';
+            std::cout << "<" << character << ">";
+            if (wordListBucket.empty()) {
+                std::cout << "\t" << "list is empty" << std::endl;
+            }
+            for (const auto& word : wordListBucket) {
+                std::cout << word << std::endl;
+            }
         }
         character++;
     }
@@ -219,17 +169,28 @@ void Dictionary::print_buckets_sorted_on_word_text(const set<char> &charSet) con
 
 void Dictionary::print_buckets_sorted_on_word_frequency(const set<char> &charSet) const {
     char character {'A'};
-    char capital{};
+    std::cout << "buckets sorted on word frequency" << std::endl;
+    std::cout << "===========================" << std::endl;
     for (auto & wordListBucket : *word_list_buckets) {
         if (!charSet.empty()) {
-            if (charSet.count(character) == 0 && charSet.count(tolower(character)) == 0) continue;
-        }
-        if (character == '[') character = ' ';
-        std::cout << "<" << character << ">";
-        std::forward_list<Word> forwardWordListBucket(wordListBucket.begin(), wordListBucket.end());
-        forwardWordListBucket.sort(isLessFrequent);
-        for (const auto& word : forwardWordListBucket) {
-            std::cout << word << std::endl;
+            if (charSet.count(character) > 0 || charSet.count(tolower(character)) > 0) {
+                if (character == '[') character = ' ';
+                std::cout << "<" << character << ">";
+                std::forward_list<Word> forwardWordListBucket(wordListBucket.begin(), wordListBucket.end());
+                forwardWordListBucket.sort(isLessFrequent);
+                for (const auto& word : forwardWordListBucket) {
+                    std::cout << word << std::endl;
+                }
+            }
+        } else {
+            if (character == '[') character = ' ';
+            std::cout << "<" << character << ">";
+            if (wordListBucket.empty()) {
+                std::cout << "\t" << "list is empty" << std::endl;
+            }
+            for (const auto& word : wordListBucket) {
+                std::cout << word << std::endl;
+            }
         }
         character++;
     }
@@ -237,17 +198,28 @@ void Dictionary::print_buckets_sorted_on_word_frequency(const set<char> &charSet
 
 void Dictionary::print_buckets_sorted_on_word_length(const set<char> &charSet) const {
     char character {'A'};
-    char capital{};
+    std::cout << "buckets sorted on word length" << std::endl;
+    std::cout << "===========================" << std::endl;
     for (auto & wordListBucket : *word_list_buckets) {
         if (!charSet.empty()) {
-            if (charSet.count(character) == 0 && charSet.count(tolower(character)) == 0) continue;
-        }
-        if (character == '[') character = ' ';
-        std::cout << "<" << character << ">";
-        std::forward_list<Word> forwardWordListBucket(wordListBucket.begin(), wordListBucket.end());
-        forwardWordListBucket.sort(isShorter);
-        for (const auto& word : forwardWordListBucket) {
-            std::cout << word << std::endl;
+            if (charSet.count(character) > 0 || charSet.count(tolower(character)) > 0) {
+                if (character == '[') character = ' ';
+                std::cout << "<" << character << ">";
+                std::forward_list<Word> forwardWordListBucket(wordListBucket.begin(), wordListBucket.end());
+                forwardWordListBucket.sort(isShorter);
+                for (const auto& word : forwardWordListBucket) {
+                    std::cout << word << std::endl;
+                }
+            }
+        } else {
+            if (character == '[') character = ' ';
+            std::cout << "<" << character << ">";
+            if (wordListBucket.empty()) {
+                std::cout << "\t" << "list is empty" << std::endl;
+            }
+            for (const auto& word : wordListBucket) {
+                std::cout << word << std::endl;
+            }
         }
         character++;
     }

@@ -4,29 +4,6 @@
 
 #ifndef WORD_COUNTER_DICTIONARY_H
 #define WORD_COUNTER_DICTIONARY_H
-/*
-
-#include<string>
-using std::string;
-#include "../inc/WordList.h"
-
-class Dictionary {
-private:
-    string filename;
-    WordList wordListBuckets[27];  // 26  alpha buckets + 1 none-alpha bucket
-    size_t bucketIndex(const string& word) ;
-public:
-    explicit Dictionary(const string& filename);
-    void processWord(const string& word, int lineNum) ;
-    void print(std::ostream& out) const;
-    Dictionary()  = delete;
-    ~Dictionary() = default;
-    Dictionary(const Dictionary& source) = default;
-    Dictionary(Dictionary&& source) = default;
-    Dictionary& operator=(const Dictionary& rhs) = default;
-    Dictionary& operator=(Dictionary&& rhs) = default;
-};
-*/
 
 #include<iostream>
 #include <fstream>
@@ -37,6 +14,7 @@ public:
 #include<set>
 #include <forward_list>
 #include "Word.h"
+
 using std::forward_list;
 using std::set;
 using std::vector;
@@ -54,7 +32,7 @@ private:
     array<list<Word>, 27>* word_list_buckets; // array of 27 word list buckets
 
     // returns the index of the bucket corresponding to wordText[0]
-    size_t bucket_index(const string& wordText) const;
+    static size_t bucket_index(const string& wordText) ;
 
     // extracts and returns the words separated by theDelimiters in a specified line
     vector<string> extract_words_from_line(const string& line) const;
